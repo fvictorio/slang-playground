@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Two Column Layout</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: sans-serif;
+        }
+        .container {
+            display: flex;
+            height: 100%;
+        }
+        .column {
+            height: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .left {
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+        }
+        .right {
+            width: 50%;
+        }
+        textarea, .output {
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 10px;
+            box-sizing: border-box;
+            width: 100%;
+        }
+        textarea {
+            height: 50%;
+            resize: none;
+        }
+        .output {
+            height: 100%;
+            background-color: #f0f0f0;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="column left">
+            <textarea id="input1" placeholder="Input 1"></textarea>
+            <textarea id="input2" placeholder="Input 2"></textarea>
+        </div>
+        <div class="column right">
+            <div id="output" class="output"></div>
+        </div>
+    </div>
+    <script type="module" src="/src/index.js"></script>
+</body>
+</html>
