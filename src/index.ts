@@ -2,9 +2,11 @@ import { Query, QueryMatch } from "@nomicfoundation/slang/cst";
 import { Parser } from "@nomicfoundation/slang/parser";
 import { LanguageFacts } from "@nomicfoundation/slang/utils";
 
-const input1 = document.getElementById('input1')! as HTMLTextAreaElement;
-const input2 = document.getElementById('input2')! as HTMLTextAreaElement;
-const output = document.getElementById('output')!;
+import { basicSetup } from "codemirror";
+import { EditorState } from "@codemirror/state";
+import { EditorView, placeholder } from "@codemirror/view";
+import { solidity } from '@replit/codemirror-lang-solidity';
+
 
 const initialSolidityCode = `
 contract Foo {}
@@ -18,15 +20,56 @@ const initialQuery = `
 ]
 `.trim();
 
-input1.value = initialSolidityCode;
-input2.value = initialQuery;
+let solidityContent = initialSolidityCode;
+let queryContent = initialQuery;
+
+const solidityEditorState = EditorState.create({
+  doc: initialSolidityCode,
+  extensions: [
+    basicSetup,
+    placeholder("Solidity code"),
+    solidity,
+    EditorView.updateListener.of((update) => {
+      if (update.docChanged) {
+        solidityContent = update.state.doc.toString();
+        updateOutput();
+      }
+    }),
+  ],
+});
+
+const solidityEditorView = new EditorView({
+  state: solidityEditorState,
+  parent: document.getElementById("solidityEditor")!,
+});
+
+const queryEditorState = EditorState.create({
+  doc: initialQuery,
+  extensions: [
+    basicSetup,
+    placeholder("Slang query"),
+    EditorView.updateListener.of((update) => {
+      if (update.docChanged) {
+        queryContent = update.state.doc.toString();
+        updateOutput();
+      }
+    }),
+  ],
+});
+
+const queryEditorView = new EditorView({
+  state: queryEditorState,
+  parent: document.getElementById("queryEditor")!,
+});
+
+const output = document.getElementById("output")!;
 
 function updateOutput() {
     output.textContent = "Write Solidity code and a Slang query to see the results here.";
 
     const parser = Parser.create(LanguageFacts.latestVersion());
 
-    const tree = parser.parseFileContents(input1.value);
+    const tree = parser.parseFileContents(solidityContent);
     const cursor = tree.createTreeCursor();
 
     if (tree.errors().length > 0) {
@@ -34,12 +77,12 @@ function updateOutput() {
         return;
     }
 
-    if (input2.value.trim() === "") {
+    if (queryContent.trim() === "") {
         return;
     }
     let query: Query;
     try {
-        query = Query.create(input2.value);
+        query = Query.create(queryContent);
     } catch (e) {
         output.textContent = "Error parsing the query: " + e.message;
         return;
@@ -81,8 +124,5 @@ function updateOutput() {
 
     output.textContent = result
 }
-
-input1.addEventListener('input', updateOutput);
-input2.addEventListener('input', updateOutput);
 
 updateOutput();

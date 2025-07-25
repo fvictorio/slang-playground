@@ -1,84 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Slang Playground</title>
     <style>
-        body, html {
-            height: 100%;
-            margin: 0;
-            font-family: sans-serif;
-        }
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 20px;
-            background-color: #f8f9fa;
-            border-bottom: 1px solid #dee2e6;
-        }
-        header h1 {
-            margin: 0;
-            font-size: 1.5em;
-        }
-        header nav a {
-            margin-left: 15px;
-            text-decoration: none;
-            color: #007bff;
-        }
-        .container {
-            display: flex;
-            height: calc(100% - 70px);
-        }
-        .column {
-            height: 100%;
-            padding: 10px;
-            box-sizing: border-box;
-        }
-        .left {
-            width: 50%;
-            display: flex;
-            flex-direction: column;
-        }
-        .right {
-            width: 50%;
-        }
-        textarea, .output {
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            padding: 10px;
-            box-sizing: border-box;
-            width: 100%;
-        }
-        textarea {
-            height: 50%;
-            resize: none;
-        }
-        .output {
-            height: 100%;
-            background-color: #f0f0f0;
-            white-space: pre-wrap;
-        }
+      body,
+      html {
+        height: 100%;
+        margin: 0;
+        font-family: sans-serif;
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 20px;
+        background-color: #f8f9fa;
+        border-bottom: 1px solid #dee2e6;
+      }
+      header h1 {
+        margin: 0;
+        font-size: 1.5em;
+      }
+      header nav a {
+        margin-left: 15px;
+        text-decoration: none;
+        color: #007bff;
+      }
+      .container {
+        display: flex;
+        height: calc(100% - 70px);
+      }
+      .column {
+        height: 100%;
+        padding: 10px;
+        box-sizing: border-box;
+      }
+      .left {
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+      }
+      .right {
+        width: 50%;
+      }
+      .output {
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 10px;
+        box-sizing: border-box;
+        width: 100%;
+        height: 100%;
+        background-color: #f0f0f0;
+        white-space: pre-wrap;
+      }
+      .editor-container {
+        flex: 1;
+        height: 50%;
+      }
+      .editor {
+        height: 100%;
+      }
+      .cm-editor {
+        max-height: 100%;
+      }
     </style>
-  <script type="module" crossorigin src="/src/index.js"></script>
-</head>
-<body>
+    <script type="module" crossorigin src="/src/index.js"></script>
+  </head>
+  <body>
     <header>
-        <h1>Slang Playground</h1>
-        <nav>
-            <a href="https://github.com/fvictorio/slang-playground" target="_blank">GitHub</a>
-            <a href="https://nomicfoundation.github.io/slang/latest/" target="_blank">Slang docs</a>
-        </nav>
+      <h1>Slang Playground</h1>
+      <nav>
+        <a href="https://github.com/fvictorio/slang-playground" target="_blank"
+          >GitHub</a
+        >
+        <a
+          href="https://nomicfoundation.github.io/slang/latest/"
+          target="_blank"
+          >Slang docs</a
+        >
+      </nav>
     </header>
     <div class="container">
-        <div class="column left">
-            <textarea id="input1" placeholder="Solidity code"></textarea>
-            <textarea id="input2" placeholder="Input 2"></textarea>
+      <div class="column left">
+        <div class="editor-container">
+          <div id="solidityEditor" class="editor"></div>
         </div>
-        <div class="column right">
-            <div id="output" class="output"></div>
+        <div class="editor-container">
+          <div id="queryEditor" class="editor"></div>
         </div>
+      </div>
+      <div class="column right">
+        <div id="output" class="output"></div>
+      </div>
     </div>
-</body>
+  </body>
 </html>
