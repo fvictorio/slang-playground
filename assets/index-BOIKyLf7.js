@@ -6,7 +6,7 @@ contract Bar {}
 [ContractDefinition
   name: ["Foo"]
 ]
-`.trim();Et.value=ca;et.value=ua;function kt(){De.textContent="";const t=sa.create(la.latestVersion()).parseFileContents(Et.value),a=t.createTreeCursor();if(t.errors().length>0){De.textContent="Error parsing the Solidity file: "+t.errors()[0].message;return}if(et.value.trim()==="")return;let l;try{l=ia.create(et.value)}catch(b){De.textContent="Error parsing the query: "+b.message;return}const n=[...a.query([l])];if(n.length===0){De.textContent="No matches found.";return}let i="",w=!0;for(const[b,m]of Object.entries(n))if(w||(i+=`
+`.trim();Et.value=ca;et.value=ua;function kt(){De.textContent="Write Solidity code and a Slang query to see the results here.";const t=sa.create(la.latestVersion()).parseFileContents(Et.value),a=t.createTreeCursor();if(t.errors().length>0){De.textContent="Error parsing the Solidity file: "+t.errors()[0].message;return}if(et.value.trim()==="")return;let l;try{l=ia.create(et.value)}catch(b){De.textContent="Error parsing the query: "+b.message;return}const n=[...a.query([l])];if(n.length===0){De.textContent="No matches found.";return}let i="",w=!0;for(const[b,m]of Object.entries(n))if(w||(i+=`
 `),w=!1,i+=`Match ${Number(b)+1}:
 `,i+=`    Line: ${m.root.textRange.start.line+1}
 `,Object.values(m.captures).length>0){i+=`    Captures:
