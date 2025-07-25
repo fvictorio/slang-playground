@@ -10,9 +10,26 @@
             margin: 0;
             font-family: sans-serif;
         }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 1.5em;
+        }
+        header nav a {
+            margin-left: 15px;
+            text-decoration: none;
+            color: #007bff;
+        }
         .container {
             display: flex;
-            height: 100%;
+            height: calc(100% - 70px);
         }
         .column {
             height: 100%;
@@ -44,12 +61,19 @@
             white-space: pre-wrap;
         }
     </style>
-    <script type="module" src="/src/index.js"></script>
+  <script type="module" crossorigin src="/src/index.js"></script>
 </head>
 <body>
+    <header>
+        <h1>Slang Playground</h1>
+        <nav>
+            <a href="https://github.com/fvictorio/slang-playground" target="_blank">GitHub</a>
+            <a href="https://nomicfoundation.github.io/slang/latest/" target="_blank">Slang docs</a>
+        </nav>
+    </header>
     <div class="container">
         <div class="column left">
-            <textarea id="input1" placeholder="Input 1"></textarea>
+            <textarea id="input1" placeholder="Solidity code"></textarea>
             <textarea id="input2" placeholder="Input 2"></textarea>
         </div>
         <div class="column right">

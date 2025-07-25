@@ -22,7 +22,7 @@ input1.value = initialSolidityCode;
 input2.value = initialQuery;
 
 function updateOutput() {
-    output.textContent = "";
+    output.textContent = "Write Solidity code and a Slang query to see the results here.";
 
     const parser = Parser.create(LanguageFacts.latestVersion());
 
