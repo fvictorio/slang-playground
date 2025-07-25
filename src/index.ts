@@ -1,4 +1,4 @@
-import { Query, QueryMatch } from "@nomicfoundation/slang/cst";
+import { Query, QueryMatch, TextRange } from "@nomicfoundation/slang/cst";
 import { Parser } from "@nomicfoundation/slang/parser";
 import { LanguageFacts } from "@nomicfoundation/slang/utils";
 
@@ -6,7 +6,7 @@ import { basicSetup } from "codemirror";
 import { EditorState } from "@codemirror/state";
 import { EditorView, placeholder } from "@codemirror/view";
 import { solidity } from '@replit/codemirror-lang-solidity';
-
+import { linter } from "@codemirror/lint"
 
 const initialSolidityCode = `
 contract Foo {}
@@ -22,6 +22,22 @@ const initialQuery = `
 
 let solidityContent = initialSolidityCode;
 let queryContent = initialQuery;
+
+const queryLinter = linter(view => {
+  const querySource = view.state.doc.toString()
+  try {
+    Query.create(querySource);
+    return [];
+  } catch (e: any) {
+    const textRange = e.textRange as TextRange;
+    return [{
+      from: textRange.start.utf8,
+      to: textRange.end.utf8,
+      severity: "error",
+      message: e.message,
+    }]
+  }
+})
 
 const solidityEditorState = EditorState.create({
   doc: initialSolidityCode,
@@ -48,6 +64,7 @@ const queryEditorState = EditorState.create({
   extensions: [
     basicSetup,
     placeholder("Slang query"),
+    queryLinter,
     EditorView.updateListener.of((update) => {
       if (update.docChanged) {
         queryContent = update.state.doc.toString();
@@ -83,7 +100,7 @@ function updateOutput() {
     let query: Query;
     try {
         query = Query.create(queryContent);
-    } catch (e) {
+    } catch (e: any) {
         output.textContent = "Error parsing the query: " + e.message;
         return;
     }
