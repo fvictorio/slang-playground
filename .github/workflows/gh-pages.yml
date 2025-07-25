@@ -4,8 +4,10 @@ on:
       - main
 name: Build and deploy GH Pages
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
